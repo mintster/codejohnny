@@ -1,0 +1,224 @@
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* 
+
+	CodeJohnny 1.5.0 Mysql Setup
+
+	Processes: 
+
+	TABLES 
+
+	CREATE TABLE codejohnny_types
+	CREATE TABLE codejohnny_users
+	CREATE TABLE codejohnny_columns
+
+	FUNCTIONS 
+
+	CREATE FUNCTION f_codejohnny_tcase( str VARCHAR(128) )
+
+	PROCEDURES  
+
+	CREATE PROCEDURE p_codejohnny_columns_get
+
+	POPULATE TABLES
+
+	INSERT INTO codejohnny_types
+
+
+*/
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for codejohnny_columns
+-- ----------------------------
+DROP TABLE IF EXISTS codejohnny_columns;
+create table codejohnny_columns
+(
+  ColumnPosition bigint null,
+  ColumnName varchar(50) null,
+  ColumnCamelCase varchar(50) null,
+  SqlDatatype varchar(50) null,
+  JavaDatatype varchar(50) null,
+  VarcharLength bigint null,
+  DatatypeLength bigint null,
+  JavaClass varchar(100) null,
+  IsPrimary tinyint null,
+  IsLastColumn tinyint null,
+  IsRequired tinyint null,
+  ColumnComments varchar(255) null
+)
+;
+
+-- ----------------------------
+-- Records of codejohnny_columns
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for codejohnny_types
+-- ----------------------------
+DROP TABLE IF EXISTS codejohnny_types;
+create table codejohnny_types
+(
+  id bigint not null
+    primary key,
+  sql_datatype varchar(50) null,
+  sql_fieldlength bigint null,
+  java_datatype varchar(50) null,
+  java_class varchar(100) null
+)
+;
+-- ----------------------------
+-- Records of codejohnny_types
+-- ----------------------------
+INSERT INTO codejohnny_types VALUES ('0', 'smallint', '6', 'Integer', 'java.lang.Integer');
+INSERT INTO codejohnny_types VALUES ('1', 'int', '11', 'Integer', 'java.lang.Integer');
+INSERT INTO codejohnny_types VALUES ('2', 'bigint', '20', 'Long', 'java.lang.Long');
+INSERT INTO codejohnny_types VALUES ('3', 'decimal', '12', 'BigDecimal', 'java.math.BigDecimal');
+INSERT INTO codejohnny_types VALUES ('4', 'float', '14', 'Float', 'java.lang.Float');
+INSERT INTO codejohnny_types VALUES ('5', 'double', '24', 'Double', 'java.lang.Double');
+INSERT INTO codejohnny_types VALUES ('6', 'varchar', '255', 'String', 'java.lang.String');
+INSERT INTO codejohnny_types VALUES ('7', 'char', '25', 'String', 'java.lang.String');
+INSERT INTO codejohnny_types VALUES ('8', 'longtext', '65535', 'String', 'java.lang.String');
+INSERT INTO codejohnny_types VALUES ('9', 'date', '13', 'Date', 'java.sql.Date');
+INSERT INTO codejohnny_types VALUES ('10', 'time', '6', 'Time', 'java.sql.Time');
+INSERT INTO codejohnny_types VALUES ('11', 'datetime', '6', 'Timestamp', 'java.sql.Timestamp');
+INSERT INTO codejohnny_types VALUES ('12', 'bit', '5', 'Boolean', 'java.lang.Boolean');
+INSERT INTO codejohnny_types VALUES ('13', 'text', '65535', 'String', 'java.lang.String');
+INSERT INTO codejohnny_types VALUES ('14', 'timestamp', 4, 'Timestamp', 'java.sql.Timestamp');
+INSERT INTO codejohnny_types VALUES ('15', 'tinyint', 1, 'Boolean', 'java.lang.Boolean');
+
+-- ----------------------------
+-- Table structure for codejohnny_users
+-- ----------------------------
+DROP TABLE IF EXISTS codejohnny_users;
+create table codejohnny_users
+(
+  user_id bigint auto_increment comment 'Comments can be...'
+    primary key,
+  first_name varchar(50) not null comment '...useful when generating',
+  last_name varchar(50) null comment 'code for datasources!'
+)
+;
+
+-- ----------------------------
+-- Records of codejohnny_users
+-- ----------------------------
+INSERT INTO codejohnny_users VALUES ('1', 'Ted', 'Jenkins');
+INSERT INTO codejohnny_users VALUES ('2', 'Bob', 'McGee');
+INSERT INTO codejohnny_users VALUES ('3', 'Mysql', 'Sam');
+
+-- ----------------------------
+-- Procedure structure for p_codejohnny_columns_get
+-- ----------------------------
+DROP PROCEDURE IF EXISTS p_codejohnny_columns_get;
+DELIMITER ;;
+CREATE DEFINER=root@localhost PROCEDURE p_codejohnny_columns_get(in _database varchar(50),
+	in _tablename varchar(50))
+    DETERMINISTIC
+begin
+
+
+  CREATE TEMPORARY TABLE columntable (
+    ColumnPosition BIGINT(20) unsigned NOT NULL DEFAULT '0',
+    ColumnName varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
+    ColumnCamelCase varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
+    SqlDatatype varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
+    JavaDatatype varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+    VarcharLength BIGINT(20) unsigned DEFAULT NULL,
+    DatatypeLength BIGINT(20) NOT NULL DEFAULT '0',
+    JavaClass varchar(60) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+    IsPrimary TINYINT(1) DEFAULT '0' NOT NULL,
+    IsLastColumn TINYINT(1) DEFAULT '0' NOT NULL,
+    IsRequired TINYINT(1) DEFAULT '0' NOT NULL,
+    ColumnComment varchar(255) CHARACTER SET utf8 DEFAULT ''
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+  INSERT INTO columntable
+    (select ordinal_position as "ColumnPosition",
+            column_name as "ColumnName",
+            REPLACE(f_codejohnny_tcase(column_name),'_','') as "ColumnCamelCase",
+            data_type as "SqlDatatype",
+            NULL as "JavaDatatype",
+            CHARACTER_MAXIMUM_LENGTH as "VarcharLength",
+            0 as "DatatypeLength",
+            NULL as "JavaClass",
+            FALSE as "IsPrimary",
+            FALSE as "IsLastColumn",
+            FALSE as "IsRequired",
+            COLUMN_COMMENT as "ColumnComment"
+     from information_schema.COLUMNS where table_schema = _database and table_name = _tablename);
+
+  UPDATE columntable SET VarcharLength = 0 WHERE
+    VarcharLength IS NULL;
+
+  UPDATE columntable t
+    RIGHT JOIN information_schema.COLUMNS c
+      ON t.ColumnName = c.column_name AND c.table_schema = _database AND c.table_name = _tablename
+  SET t.IsRequired = TRUE where c.IS_NULLABLE = 'NO';
+
+  UPDATE columntable d
+    RIGHT JOIN codejohnny_types c
+      ON TRIM(c.sql_datatype) = TRIM(d.SqlDatatype)
+  SET d.JavaDatatype = c.java_datatype,
+    d.DatatypeLength = c.sql_fieldlength,
+    d.JavaClass = c.java_class;
+
+  UPDATE columntable SET DatatypeLength = VarcharLength
+  where VarcharLength > 0;
+
+  UPDATE columntable SET IsPrimary = TRUE where ColumnPosition = 1;
+
+  SET @maxColumn = (SELECT max(ColumnPosition) FROM columntable);
+  UPDATE columntable SET IsLastColumn = TRUE where ColumnPosition = @maxColumn;
+
+  select * from columntable order by ColumnPosition;
+
+  drop temporary table if exists columntable;
+
+end
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for f_codejohnny_tcase
+-- ----------------------------
+DROP FUNCTION IF EXISTS f_codejohnny_tcase;
+DELIMITER ;;
+CREATE DEFINER=root@localhost FUNCTION f_codejohnny_tcase( str VARCHAR(128) ) RETURNS varchar(128) CHARSET latin1
+    DETERMINISTIC
+BEGIN 
+  DECLARE c CHAR(1); 
+  DECLARE s VARCHAR(128); 
+  DECLARE i INT DEFAULT 1; 
+  DECLARE bool INT DEFAULT 1; 
+  DECLARE punct CHAR(17) DEFAULT ' ()[]{},.-_!@;:?/'; 
+  SET s = LCASE( str ); 
+  WHILE i <= LENGTH( str ) DO
+    BEGIN 
+      SET c = SUBSTRING( s, i, 1 ); 
+      IF LOCATE( c, punct ) > 0 THEN 
+        SET bool = 1; 
+      ELSEIF bool=1 THEN  
+        BEGIN 
+          IF c >= 'a' AND c <= 'z' THEN  
+            BEGIN 
+							IF i > 1 THEN
+								SET s = CONCAT(LEFT(s,i-1),UCASE(c),SUBSTRING(s,i+1)); 
+							END IF;
+              SET bool = 0; 
+            END; 
+          ELSEIF c >= '0' AND c <= '9' THEN 
+            SET bool = 0; 
+          END IF; 
+        END; 
+      END IF; 
+      SET i = i+1; 
+    END; 
+  END WHILE;
+
+  RETURN s; 
+END
+;;
+DELIMITER ;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connections>
+	<connection>
+		<name>mysql.codejohnnydb</name>
+		<environment>mysql</environment>
+		<username>devuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>codejohnnydb</database>
+	</connection>
+	<connection>
+		<name>mysql.shirodb</name>
+		<environment>mysql</environment>
+		<username>devuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>shirodb</database>
+	</connection>
+</connections>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<name>propertiesIT.xml</name>
+	<description>
+		Property Handling and Conversion
+	</description>
+	<dataclass>Tweet</dataclass>
+	<datatable>tweets</datatable>
+	<connection>mysql.codejohnnydb</connection>
+	<properties />
+	<methods>
+		<method name="testloop" method="testLoop" type="com.codejohnny.templates.DataTypeLoopTest"
+			pattern="Long userId, String username..." />
+	</methods>
+	<content><![CDATA[
+
+        for (CodeJohnnyColumn c : codeJohnnyTemplate.getColumns()) {
+            if (!c.isPrimary) {
+                String columnName = StringUtils.capitalize(c.columnCamelCase);
+                switch (CjSqlDatatype.toSqlDataType(c.sqlDatatype.toUpperCase())) {
+{{~testloop}}
+
+]]>
+	</content>
+</template>

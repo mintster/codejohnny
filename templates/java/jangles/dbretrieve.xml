@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <name>mysqlretrieve.xml</name>
+    <description>
+        Business Layer Request, Data Retrieval and Populate Container Object in PostreSQL
+    </description>
+    <dataclass>JsonTweet</dataclass>
+    <datatable>z_tweets</datatable>
+    <connection>mysql.codejohnnydb</connection>
+    <mustache type="com.codejohnny.templates.java.jangles.DbRetrieve" />
+    <properties>
+        <property name="dbClass" value="twitter" />
+        <property name="varDataType" value="String" />
+        <property name="varName" value="screenName" />
+        <property name="sql"
+                  value="select * from v_tweets where screen_name = '&quot; + screenName + &quot;' ORDER BY id DESC" />
+        <property name="doPopulate" value="true" type="java.lang.Boolean"
+                  description="generate populateTweets(rs..) y/n"/>
+    </properties>
+    <methods>
+        <method name="closem" method="closeConnections" type="com.codejohnny.templates.java.jangles.DbRetrieve"
+                pattern="close(rs, cs...)"/>
+        <method name="populateloop" method="populateLoop" type="com.codejohnny.templates.java.jangles.DbRetrieve"
+                pattern="codeJohnnyUser.setFirstName(rs.getString('first_name'));"/>
+    </methods>
+    <content><![CDATA[
+
+
+// service calls ------------------------------------------------------------------- */
+
+@Override
+public {dataclass} get{dataclass}({varDataType} {varName}) {
+    return {dbClass}Db.get{dataclass}({varName});
+}
+
+@Override
+public List<{dataclass}> get{pluraldataclass}() {
+    return {dbClass}Db.get{pluraldataclass}();
+}
+
+// retrieve List -------------------------------------------------------------------- */
+
+@Override
+public List<{dataclass}> get{pluraldataclass}()   {
+		List<{dataclass}> {lowerdataclass}List = new ArrayList<>();
+		try {
+			Connection cn = sqlConnection();
+            CallableStatement cs = cn.prepareCall("{sql}");
+            ResultSet rs = cs.executeQuery();
+			while (rs.next()) {
+				{dataclass}  {lowerdataclass} = new {dataclass}();
+				populate{dataclass}(rs, {lowerdataclass});
+				{lowerdataclass}List.add({lowerdataclass});
+			}
+			{{~closem}}
+		} catch (SQLException e) {
+			logger.info("Error getting {dataclass}: " + e.getMessage());
+		}
+		return {lowerdataclass}List;
+}
+
+// retrieve Single Object -------------------------------------------------------------------- */
+
+    @Override
+    public {dataclass} get{dataclass}({varDataType} {varName})   {
+        {dataclass} {lowerdataclass} = new {dataclass}();
+        try {
+            Connection cn = sqlConnection();
+            CallableStatement cs = cn.prepareCall("SELECT * FROM {datatable} where user_list_name = ?");
+            cs.set{varDataType}(1, {varName});
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                populate{dataclass}(rs, {lowerdataclass});
+            }
+            rs.close();
+            cs.close();
+            cn.close();
+        } catch (SQLException e) {
+            logger.info("Error getting {dataclass}: " + e.getMessage());
+        }
+        return {lowerdataclass};
+    }
+
+{{#doPopulate}}
+    private void populate{dataclass}(ResultSet rs, {dataclass} {lowerdataclass}) throws SQLException {
+    {{~populateloop}}
+    }
+{{/doPopulate}}
+
+{{#users}}
+    {{userId}} : {{firstName}} {{lastName}}
+{{/users}}
+]]>
+    </content>
+</template>

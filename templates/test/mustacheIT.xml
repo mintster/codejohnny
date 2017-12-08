@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <name>mustacheIT.xml</name>
+    <description>
+        Mustache Parsing Test
+    </description>
+    <dataclass />
+    <datatable />
+    <mustache type="com.codejohnny.templates.MustacheTest"></mustache>
+    <connection>mysql.codejohnnydb</connection>
+    <properties>
+        <property name="mustachetrue" value="true" type="java.lang.Boolean"
+                  description="will display contents"/>
+        <property name="mustachefalse" value="false" type="java.lang.Boolean"
+                  description="will not display contents"/>
+        <property name="mustacheinteger" value="4" type="java.lang.Integer"
+                  description="for iterations"/>
+    </properties>
+    <methods>
+        <method name="mustachevar" method="mustacheVar" type="com.codejohnny.templates.MustacheTest"
+                pattern="Long userId, String username..."/>
+    </methods>
+    <content><![CDATA[
+
+{{~mustachevar}}
+
+{{~#mustachetrue}} MUSTACHE TRUE IS PRESENT! {{~/mustachetrue}}
+{{~#mustachefalse}} MUSTACHE TRUE IS HIDDEN! {{~/mustachefalse}}
+
+{{~# users}}
+    {{~ userId }} : {{~ firstName }} {{~ lastName }}
+{{~/ users}}
+]]>
+    </content>
+</template>

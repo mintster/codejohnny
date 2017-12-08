@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <name>propertiesIT.xml</name>
+    <description>
+        Property Handling and Conversion
+    </description>
+    <dataclass>Tweet</dataclass>
+    <datatable>tweets</datatable>
+    <connection>mysql.codejohnnydb</connection>
+    <properties>
+        <property name="methodname" value="someMethod" description="method name"/>
+    </properties>
+    <methods>
+        <method name="coltypeloop" method="colTypeLoop" type="com.codejohnny.templates.java.util.ColTypeSwitch"
+                pattern="Long userId, String username..."/>
+    </methods>
+    <content><![CDATA[
+
+    /*
+        "(" + user.getUsername() + "', " +
+        "'" + user.getEmail() + "', " +
+     */
+    public String {methodname}(CodeJohnnyTemplate codeJohnnyTemplate) {
+
+        for (CodeJohnnyColumn c : codeJohnnyTemplate.getColumns()) {
+            if (!c.isPrimary) {
+                switch (CjSqlDatatype.toSqlDataType(c.sqlDatatype.toUpperCase())) {
+{{~coltypeloop}}
+break;
+default:
+    break;
+ }
+        }
+        if (c.getIsLastColumn()) {
+            loopPopulatedPattern = loopPopulatedPattern.replace("1","2");
+        }
+        loopBuilder.append(loopPopulatedPattern);
+        }
+
+}
+]]>
+    </content>
+</template>

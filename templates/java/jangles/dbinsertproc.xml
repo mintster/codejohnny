@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<name>dbinsertproc.xml</name>
+	<description>
+		Service and DB Layers for entering MySQL data
+	</description>
+	<dataclass>TweetId</dataclass>
+	<datatable>tweets_ids</datatable>
+	<connection>mysql.codejohnnydb</connection>
+	<properties>
+		<property name="addId" value="false" type="java.lang.Boolean"
+				  description="include Primary Id in loop pattern"/>
+	</properties>
+	<methods>
+		<method name="commaloop" method="commaLoop" type="com.codejohnny.templates.java.jangles.DbInsertProc"
+			pattern="?,?,?,?,?..." />
+		<method name="paramloop" method="procParamLoop" type="com.codejohnny.templates.java.jangles.DbInsertProc"
+			pattern="cs.setLong(1, tweet.getId());" />
+	</methods>
+	<content><![CDATA[
+
+@Override
+public void add{dataclass}({dataclass} {lowerdataclass}) {
+	try {
+		Connection cn = sqlConnection();
+		CallableStatement cs = cn.prepareCall("{call p_{lowerpluraldataclass}_insert({{~commaloop}})}");
+
+		// region parameters
+
+{{~paramloop}}
+
+		// endregion
+
+		cs.execute();
+
+		cs.close();
+		cn.close();
+	} catch (SQLException e) {
+		logger.info("Error adding {lowerdataclass}: " + e.getMessage());
+	}
+}
+
+]]>
+	</content>
+</template>

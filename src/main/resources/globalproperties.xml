@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globalproperties>
+	<globalproperty name="baseclass" value="Jangles"
+
+		description="Provider Prefix Name. ex: '[Jangles]Configuration'"
+		  />
+	<globalproperty name="otherglobal" value="OTHERGLOBAL"
+
+		description="Some other use. ex: 
+		'[CodeJohnny].get[codejohnny]Something'"
+		defaultvalue="CodeJohnny" />
+	<globalproperty name="yetanotherglobal" value="YETANOTHERGLOBAL"
+
+		description="Some other use. ex: '[CodeJohnny].get[codejohnny]Something'"
+		defaultvalue="CodeJohnny" />
+</globalproperties>

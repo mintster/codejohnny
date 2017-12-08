@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <name>propertiesIT.xml</name>
+    <description>
+        Property Handling and Conversion
+    </description>
+    <dataclass>Tweet</dataclass>
+    <datatable>tweets</datatable>
+    <connection>mysql.codejohnnydb</connection>
+    <properties>
+        <property name="addIdTrue" value="true" type="java.lang.Boolean"
+                  description="include Primary Id in loop pattern"/>
+        <property name="addIdFalse" value="false" type="java.lang.Boolean"
+                  description="include Primary Id in loop pattern"/>
+        <property name="intValue" value="100" type="java.lang.Integer"
+                  description="include Primary Id in loop pattern"/>
+    </properties>
+    <methods>
+        <method name="testloop" method="testLoop" type="com.codejohnny.templates.PropertiesTest"
+                pattern="Long userId, String username..."/>
+    </methods>
+    <content><![CDATA[
+
+{{~testloop}}
+
+]]>
+    </content>
+</template>

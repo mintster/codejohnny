@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connections>
+	<connection>
+		<name>mysql.codejohnnydb</name>
+		<environment>mysql</environment>
+		<username>devuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>codejohnnydb</database>
+	</connection>
+	<connection>
+		<name>mysql.microdb</name>
+		<environment>mysql</environment>
+		<username>devuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>microdb</database>
+	</connection>
+	<connection>
+		<name>mysql.shirodb</name>
+		<environment>mysql</environment>
+		<username>devuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>shirodb</database>
+	</connection>
+	<connection>
+		<name>postgresql.codejohnny</name>
+		<environment>postgresql</environment>
+		<username>postgres</username>
+		<password>mypassword</password>
+		<urlbase>jdbc:postgresql://localhost/</urlbase>
+		<database>codejohnnydb</database>
+	</connection>
+</connections>
+

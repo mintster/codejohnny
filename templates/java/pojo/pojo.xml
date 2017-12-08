@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<name>Create Container Object Class</name>
+	<description>
+		Creates Container Object from MySql or PostreSQL table
+	</description>
+	<dataclass>JsonTwitterUser</dataclass>
+	<datatable>z_tweets_users</datatable>
+	<connection>mysql.codejohnnydb</connection>
+	<properties>
+		<property name="packagename" value="com.nixmash.jangles.dto"
+			  description="POJO Package Name. ex: '[com.nixmash.dto].UserDTO'" />
+	</properties>
+	<methods>
+		<method name="propertyloop" method="propertyLoop" type="com.codejohnny.templates.java.pojo.Pojo"
+			pattern="public int userId;" />
+		<method name="gettersetterloop" method="gettersetterLoop" type="com.codejohnny.templates.java.pojo.Pojo"
+			pattern="public void setName(String name)...public String getName()..." />		
+	</methods>
+	<content><![CDATA[
+
+
+package {packagename};
+
+import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
+import java.math.BigDecimal;
+
+public class {dataclass} {
+
+	public {dataclass}() {}
+
+	// region properties
+
+	{{~propertyloop}}
+
+	// endregion
+
+	// region getters/setters
+
+	{{~gettersetterloop}}
+
+	// endregion
+
+}
+
+]]>
+	</content>
+</template>

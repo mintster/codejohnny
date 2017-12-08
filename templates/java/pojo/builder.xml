@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <name>Create Builder Pattern</name>
+    <description>
+        Creates Builder Pattern for POJO
+    </description>
+    <dataclass>Tweet</dataclass>
+    <datatable>z_tweets</datatable>
+    <connection>mysql.codejohnnydb</connection>
+    <properties>
+        <property name="packagename" value="com.nixmash.jangles.dto"
+                  description="POJO Package Root. ex: '[com.nixmash.jangles.dto].UserDTO'"/>
+        <property name="addId" value="true" type="java.lang.Boolean"
+                  description="include Primary Id in loop pattern"/>
+    </properties>
+    <methods>
+        <method name="builderparamloop" method="getBuilderParams" type="com.codejohnny.templates.java.pojo.Builder"
+                pattern="Long userId, String username..."/>
+        <method name="buildervarloop" method="getBuilderVarLoop" type="com.codejohnny.templates.java.pojo.Builder"
+                pattern="userId, username..."/>
+        <method name="builtvarloop" method="getBuiltParamNames" type="com.codejohnny.templates.java.pojo.Builder"
+                pattern="built.userId = userid;"/>
+        <method name="buildersinglepropertyloop" method="getBuiltIndiProperties" type="com.codejohnny.templates.java.pojo.Builder"
+                pattern="built.userId = userid;"/>
+    </methods>
+    <content><![CDATA[
+
+
+public static Builder getBuilder({{~builderparamloop}}) {
+	return new {dataclass}.Builder({{~buildervarloop}});
+}
+
+public static class Builder {
+
+private {dataclass} built;
+
+ public Builder({{~builderparamloop}}) {
+    built = new {dataclass}();
+    {{~builtvarloop}}
+ }
+
+{{~buildersinglepropertyloop}}
+public {dataclass} build() {
+    return built;
+}
+
+}
+
+]]>
+    </content>
+</template>

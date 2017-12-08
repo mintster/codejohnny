@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<name>mysqlinsert.xml</name>
+	<description>
+		Service and DB Layers for entering MySQL data
+	</description>
+	<dataclass>Status</dataclass>
+	<datatable>tweets</datatable>
+	<connection>mysql.codejohnnydb</connection>
+	<properties>
+		<property name="dbprovider" value="NixMashupPostgreSql"
+			  description="Provider Prefix Name. ex: '[CodeJohnny]SearchDataProvider'" />
+	</properties>
+	<methods>
+		<method name="fieldloop" method="fieldLoop" type="com.codejohnny.templates.java.bq.BqInsert"
+			pattern="username, first_name, last_name" />
+		<method name="dtoloop" method="dtoLoop" type="com.codejohnny.templates.java.bq.BqInsert"
+			pattern="user.getUsername() + user.getEmail() + ..." />
+	</methods>
+	<content><![CDATA[
+
+// Start Bootique JDBC Query Statement ------------------------------------------------------- */
+
+@Override
+public {dataclass} add{dataclass}({dataclass} {lowerdataclass}) throws SQLException {
+	{
+ try (Connection connection = dataSource.forName(appConfig.datasourceName).getConnection()) {
+
+            try (Statement statement = connection.createStatement()) {
+                String sql = "INSERT INTO {datatable} ({{~fieldloop}}) VALUES (" +
+                {{~dtoloop}}
+                  ")";
+               int result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+                if (result == 1) {
+                    ResultSet generatedKeys = statement.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                         {lowerdataclass}.setUserId(generatedKeys.getLong(1));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.info("Error creating new {dataclass}: " + e.getMessage());
+        }
+        return {lowerdataclass};
+	}
+}
+
+// End Bootique JDBC Query Statement ------------------------------------------------------- */
+
+
+]]>
+	</content>
+</template>

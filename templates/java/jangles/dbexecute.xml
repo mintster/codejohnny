@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <name>dbexecute.xml</name>
+    <description>
+        Execute MySQL statement with JDBC in Jangles
+    </description>
+    <dataclass>JsonMember</dataclass>
+    <datatable>batch_members</datatable>
+    <connection>mysql.codejohnnydb</connection>
+    <properties>
+        <property name="varDataType" value="String"/>
+        <property name="varName" value="screenName"/>
+        <property name="methodName" value="getMemberTweets" />
+        <property name="sql"
+                  value="{call p_batch_members_create();}" />
+        <property name="isCallableStatement" value="false" type="java.lang.Boolean"
+                  description="use 'executeQuery' (false) or 'callableStatement' (true)"/>
+        <property name="doPopulate" value="false" type="java.lang.Boolean"
+                  description="generate populateTweets(rs..) y/n"/>
+    </properties>
+    <methods />
+    <content><![CDATA[
+
+    @Override
+    public void {methodName}({varDataType} {varName}) {
+        try {
+            Connection cn = sqlConnection();
+            Statement statement = cn.createStatement();
+            statement.execute("{sql}");
+            statement.close();
+            cn.close();
+        } catch (SQLException e) {
+            logger.info("Error {dataclass}: " + e.getMessage());
+        }
+    }
+
+]]>
+    </content>
+</template>

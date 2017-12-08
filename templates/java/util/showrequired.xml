@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<name>IsRequired And Comments</name>
+	<description>
+		Displays IsRequired status and Comments of Table Columns
+	</description>
+	<dataclass>User</dataclass>
+	<datatable>codejohnny_users</datatable>
+	<connection>mysql.codejohnnydb</connection>
+	<properties />
+	<methods>
+		<method name="isrequiredloop"
+			method="showIsRequiredAndComments" 
+			type="com.codejohnny.templates.java.util.FieldRequired"
+			example="Is Required: field true/false -- Column Comments;" />
+	</methods>
+	<content><![CDATA[
+
+// Demonstrates retrieving SQL Table field "isRequired" property and Comments
+
+{{~isrequiredloop}}
+	
+]]>
+	</content>
+</template>
