@@ -22,14 +22,14 @@
     </methods>
     <content><![CDATA[
 
-{{~mustachevar}}
+{{mustachevar}}
 
-{{~#mustachetrue}} MUSTACHE TRUE IS PRESENT! {{~/mustachetrue}}
-{{~#mustachefalse}} MUSTACHE TRUE IS HIDDEN! {{~/mustachefalse}}
+{{#mustachetrue}} MUSTACHE TRUE IS PRESENT! {{/mustachetrue}}
+{{#mustachefalse}} MUSTACHE TRUE IS HIDDEN! {{/mustachefalse}}
 
-{{~# users}}
-    {{~ userId }} : {{~ firstName }} {{~ lastName }}
-{{~/ users}}
+{{# users}}
+    {{ userId }} : {{ firstName }} {{ lastName }}
+{{/ users}}
 ]]>
     </content>
 </template>

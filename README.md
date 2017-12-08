@@ -7,11 +7,17 @@ Updated: September 15, 2017
 
 CodeJohnny is a template-based Code Generation Application where you populate `{{mustache-like}}` tags in pure Java. CodeJohnny can generate code in any language for things like data retrieval, SQL Scripts and Procedures, POJOs and Builder patterns. 
 
-CodeJohnny's XML templates support **Typed Properties**, **Variables**, **Methods** and **Mustache Parsing**. **Typed Properties** like Booleans and Integers enable logical operations in our templates. **Variables** are used to replace `{singleBracket}` tags and **methods** replace tags represented as`{{~doubleBracket}}` tags. **Mustache Parsing** is performed last on `{{doubleBracket}}` tags. A number of **built-in tags** are included, like `{pluraldataclass}`, `{primarykey}`, and others, with **global properties** defined in `globalproperties.xml.`
+CodeJohnny's XML templates support **Typed Properties**, **Variables**, **Methods** and **Mustache Parsing**. 
+- **Typed Properties** like Booleans and Integers enable logical operations in our templates. 
+- **Variables** are used to replace `{singleBracket}` tags and 
+- **Methods** replace tags represented as`{{~doubleBracket}}` tags. 
+- **Mustache Parsing** is performed last on `{{#doubleBracket}}{{/doubleBracket}}` tag groups. 
+- **Built-in tags** are included, like `{pluraldataclass}`, `{primarykey}`, and others, with 
+- **Global properties** defined in `globalproperties.xml.`
 
 ### Installation
 
-Because of CodeJohnny's data-centric design, you will want to create a MySQL database solely for Code Generation. You can also add the CodeJohnny SQL schema to your application's database. For either approach start by running the MySQL setup script located in `/install/sql.`
+CodeJohnny was originally created to generate JDBC boilerplate code, so it has a data-centric design a requires either a MySQL database used solely for Code Generation or CodeJohnny data objects added to your application's database. For either approach start by running the MySQL setup script located in `/install/sql.`
 
 Next configure your MySQL Connection properties located in `/resources/connections.xml.`  You can optionally add CodeJohnny Global properties in `/resources/globalproperties.xml.`
 
@@ -23,7 +29,7 @@ Here's an overview on how to generate your first template. We'll start with crea
 
 1. We've configured our MySQL Connection in `/resources/connections.xml`. Notice the`<name />` field, typically in the logical form of [SQLENGINE].[DB], or in our example `"mysql.codejohnnydb"` where "mysql" is the SQL Engine and "codejohnnydb" is the database.
 2. We need a SQL Table for the POJO so we'll use the`CodeJohnny_Users` table included in the setup script.
-3. The Template for our POJO is `/templates/java/pojo/pojo.xml.` We open the .XML template, enter `User` as our dataclass, `codejohnny_users` as our table, and the connections.xml `<name />` value we entered above.
+3. The Template for our POJO is `/templates/java/pojo/pojo.xml.` We open the .XML template, enter `User` as our dataclass, `codejohnny_users` as our table, and the connections.xml `<name />` value we entered above, `mysql.codejohnnydb`.
 4. Finally, we enter our Template location in our `Launcher` class as our `template` value, or `java/pojo/pojo.xml.`
 5. When we run the app in our IDE the `User` POJO magically appears in our output window, which we would then copy-paste into a new class file.
 
@@ -70,6 +76,15 @@ CodeJohnny is licensed under the Creative Commons Attribution NonCommercial NoDe
 CodeJohnny comes with no support of any kind. If you have questions or comments, please use the contact form at nixmash.com.
 
 ### Changelog
+
+### v 2.0.5 - December 8, 2017
+
+- **CodeJohnny** repository goes public with full Engine and Client source code.
+
+### v 2.0.4 - September 18, 2017
+
+- **Mustache Parsing** now supported for object list tags `{{# objects}}...{{/ objects}}` 
+- `{{~ methodName }}` is the new tag format for Methods
 
 ### v 2.0.3 - September 15, 2017
 
