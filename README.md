@@ -3,6 +3,8 @@
 Version: 2.0.5
 Updated: December 8, 2017
 
+***Please see the [CodeJohnny Wiki](https://github.com/mintster/codejohnny/wiki) for complete documentation***
+
 ### About
 
 CodeJohnny is a template-based Code Generation Application where you populate `{{mustache-like}}` tags in pure Java. CodeJohnny can generate code in any language for things like data retrieval, SQL Scripts and Procedures, POJOs and Builder patterns. 
