@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-	<name>Create Container Object Class</name>
+	<name>Create Simple POJO</name>
 	<description>
-		Creates Container Object from MySql or PostreSQL table
+		Creates POJO from MySql table
 	</description>
-	<dataclass>JsonTwitterUser</dataclass>
-	<datatable>z_tweets_users</datatable>
+	<dataclass>User</dataclass>
+	<datatable>codejohnny_users</datatable>
 	<connection>mysql.codejohnnydb</connection>
 	<properties>
 		<property name="packagename" value="com.nixmash.jangles.dto"

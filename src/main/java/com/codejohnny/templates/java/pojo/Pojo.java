@@ -27,17 +27,17 @@ public class Pojo {
 	 */
 	public String propertyLoop(CodeJohnnyTemplate codeJohnnyTemplate) {
 
-		String loopContent = StringUtils.EMPTY;
+		StringBuilder loopContent = new StringBuilder(StringUtils.EMPTY);
 		String loopPattern = "public %s %s;\n";
 		String loopPopulatedPattern = StringUtils.EMPTY;
 		
 		for (CodeJohnnyColumn codeJohnnyColumn : codeJohnnyTemplate.getColumns()) {
 			loopPopulatedPattern = String.format(loopPattern, codeJohnnyColumn.javaDatatype,
 					codeJohnnyColumn.columnCamelCase);
-			loopContent += loopPopulatedPattern;
+			loopContent.append(loopPopulatedPattern);
 		}
 
-		return loopContent;
+		return loopContent.toString();
 		
 
 	}

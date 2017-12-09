@@ -7,14 +7,14 @@
     <dataclass>Tweet</dataclass>
     <datatable>z_tweets</datatable>
     <connection>mysql.codejohnnydb</connection>
-    <properties>
-        <property name="addId" value="true" type="java.lang.Boolean"
-                  description="include Primary Id in loop pattern"/>
-        <property name="outId" value="false" type="java.lang.Boolean"
-                  description="return inserted record ID"/>
-        <property name="outIdName" value="user_id"
-                  description="return inserted record ID"/>
-    </properties>
+<properties>
+    <property name="addId" value="true" type="java.lang.Boolean"
+              description="include Primary Id in loop pattern"/>
+    <property name="outId" value="false" type="java.lang.Boolean"
+              description="return inserted record ID"/>
+    <property name="outIdName" value="user_id"
+              description="return inserted record ID"/>
+</properties>
     <methods>
         <method name="paramloop" method="paramLoop" type="com.codejohnny.templates.sql.InsertProc"
                 pattern="IN p_retweet_count INT,"/>

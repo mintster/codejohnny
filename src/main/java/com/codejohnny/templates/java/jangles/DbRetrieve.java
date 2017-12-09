@@ -33,15 +33,16 @@ public class DbRetrieve extends TemplateBase {
 
     }
 
-    public String processMustache(String content, CodeJohnnyTemplate codeJohnnyTemplate) throws UnsupportedEncodingException, SQLException {
-        Mustache m = getMustache(content);
-        StringWriter sw = new StringWriter();
-        Map<String, Object> model = new HashMap<>();
-        model.put("users", codeJohnnyDb.getCodeJohnnyUsers());
-        addBooleanProperties(model, codeJohnnyTemplate.getProperties());
-        m.execute(sw, model);
-        return sw.toString();
-    }
+public String processMustache(String content, CodeJohnnyTemplate codeJohnnyTemplate)
+        throws UnsupportedEncodingException, SQLException {
+    Mustache m = getMustache(content);
+    StringWriter sw = new StringWriter();
+    Map<String, Object> model = new HashMap<>();
+    model.put("users", codeJohnnyDb.getCodeJohnnyUsers());
+    addBooleanProperties(model, codeJohnnyTemplate.getProperties());
+    m.execute(sw, model);
+    return sw.toString();
+}
 
       public String closeConnections(CodeJohnnyTemplate codeJohnnyTemplate) {
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-    <name>mysqlretrieve.xml</name>
+    <name>dbretrieve.xml</name>
     <description>
-        Business Layer Request, Data Retrieval and Populate Container Object in PostreSQL
+        Business Layer Request, Data Retrieval and Populate Object
     </description>
-    <dataclass>JsonTweet</dataclass>
-    <datatable>z_tweets</datatable>
+    <dataclass>User</dataclass>
+    <datatable>codejohnny_users</datatable>
     <connection>mysql.codejohnnydb</connection>
     <mustache type="com.codejohnny.templates.java.jangles.DbRetrieve" />
     <properties>
