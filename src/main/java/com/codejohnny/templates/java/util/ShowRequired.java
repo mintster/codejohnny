@@ -6,9 +6,9 @@ import com.codejohnny.templates.TemplateBase;
 
 import java.text.MessageFormat;
 
-public class FieldRequired extends TemplateBase {
+public class ShowRequired extends TemplateBase {
 
-    public FieldRequired(CodeJohnnyTemplate codeJohnnyTemplate) {
+    public ShowRequired(CodeJohnnyTemplate codeJohnnyTemplate) {
     }
 
     public String showIsRequiredAndComments(CodeJohnnyTemplate codeJohnnyTemplate) {

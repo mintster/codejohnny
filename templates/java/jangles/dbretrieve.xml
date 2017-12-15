@@ -13,7 +13,7 @@
         <property name="varDataType" value="String" />
         <property name="varName" value="screenName" />
         <property name="sql"
-                  value="select * from v_tweets where screen_name = '&quot; + screenName + &quot;' ORDER BY id DESC" />
+                  value="select * from users" />
         <property name="doPopulate" value="true" type="java.lang.Boolean"
                   description="generate populateTweets(rs..) y/n"/>
     </properties>

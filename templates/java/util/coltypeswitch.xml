@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-    <name>propertiesIT.xml</name>
+    <name>coltypeswitch.xml</name>
     <description>
-        Property Handling and Conversion
+        Switch Statement for Code Generation Methods to Traverse over Columns by Type
     </description>
     <dataclass>Tweet</dataclass>
     <datatable>tweets</datatable>
@@ -16,26 +16,22 @@
     </methods>
     <content><![CDATA[
 
-    /*
-        "(" + user.getUsername() + "', " +
-        "'" + user.getEmail() + "', " +
-     */
-    public String {methodname}(CodeJohnnyTemplate codeJohnnyTemplate) {
+public String {methodname}(CodeJohnnyTemplate codeJohnnyTemplate) {
 
-        for (CodeJohnnyColumn c : codeJohnnyTemplate.getColumns()) {
-            if (!c.isPrimary) {
-                switch (CjSqlDatatype.toSqlDataType(c.sqlDatatype.toUpperCase())) {
-{{~coltypeloop}}
-break;
-default:
-    break;
- }
+    for (CodeJohnnyColumn c : codeJohnnyTemplate.getColumns()) {
+        if (!c.isPrimary) {
+            switch (CjSqlDatatype.toSqlDataType(c.sqlDatatype.toUpperCase())) {
+            {{~coltypeloop}}
+            break;
+            default:
+            break;
         }
-        if (c.getIsLastColumn()) {
-            loopPopulatedPattern = loopPopulatedPattern.replace("1","2");
-        }
-        loopBuilder.append(loopPopulatedPattern);
-        }
+    }
+    if (c.getIsLastColumn()) {
+        loopPopulatedPattern = loopPopulatedPattern.replace("1","2");
+    }
+    loopBuilder.append(loopPopulatedPattern);
+    }
 
 }
 ]]>

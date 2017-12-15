@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-    <name>insertproc.xml</name>
+    <name>sqlinsertproc.xml</name>
     <description>
         MySQL Insert Stored Procedure
     </description>
-    <dataclass>Tweet</dataclass>
-    <datatable>z_tweets</datatable>
+    <dataclass>Job</dataclass>
+    <datatable>batch_job</datatable>
     <connection>mysql.codejohnnydb</connection>
 <properties>
     <property name="addId" value="true" type="java.lang.Boolean"
@@ -16,11 +16,11 @@
               description="return inserted record ID"/>
 </properties>
     <methods>
-        <method name="paramloop" method="paramLoop" type="com.codejohnny.templates.sql.InsertProc"
+        <method name="paramloop" method="paramLoop" type="com.codejohnny.templates.sql.SqlInsertProc"
                 pattern="IN p_retweet_count INT,"/>
-        <method name="insertloop" method="insertLoop" type="com.codejohnny.templates.sql.InsertProc"
+        <method name="insertloop" method="insertLoop" type="com.codejohnny.templates.sql.SqlInsertProc"
                 pattern="id,\n tweet_text,\n..."/>
-        <method name="valueloop" method="valueLoop" type="com.codejohnny.templates.sql.InsertProc"
+        <method name="valueloop" method="valueLoop" type="com.codejohnny.templates.sql.SqlInsertProc"
                 pattern="p_id,\n p_tweet_text,\n..."/>
     </methods>
     <content><![CDATA[

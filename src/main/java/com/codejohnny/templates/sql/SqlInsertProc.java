@@ -7,13 +7,13 @@ import com.codejohnny.enums.CjSqlDatatype;
 import com.codejohnny.templates.TemplateBase;
 import org.apache.commons.lang3.StringUtils;
 
-public class InsertProc extends TemplateBase {
+public class SqlInsertProc extends TemplateBase {
 
     private Boolean addId;
     private Boolean outId;
     private String outIdName;
 
-    public InsertProc(CodeJohnnyTemplate codeJohnnyTemplate) {
+    public SqlInsertProc(CodeJohnnyTemplate codeJohnnyTemplate) {
         this.addId = CodeJohnnyUtils.getBooleanProperty(codeJohnnyTemplate, "addId");
         this.outId = CodeJohnnyUtils.getBooleanProperty(codeJohnnyTemplate, "outId");
         this.outIdName = CodeJohnnyUtils.getStringProperty(codeJohnnyTemplate, "outIdName");

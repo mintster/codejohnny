@@ -4,8 +4,8 @@
 	<description>
 		Service and DB Layers for entering MySQL data
 	</description>
-	<dataclass>TweetId</dataclass>
-	<datatable>tweets_ids</datatable>
+	<dataclass>User</dataclass>
+	<datatable>codejohnny_users</datatable>
 	<connection>mysql.codejohnnydb</connection>
 	<properties>
 		<property name="addId" value="false" type="java.lang.Boolean"
@@ -15,7 +15,7 @@
 		<method name="commaloop" method="commaLoop" type="com.codejohnny.templates.java.jangles.DbInsertProc"
 			pattern="?,?,?,?,?..." />
 		<method name="paramloop" method="procParamLoop" type="com.codejohnny.templates.java.jangles.DbInsertProc"
-			pattern="cs.setLong(1, tweet.getId());" />
+			pattern="cs.setLong(1, user.getUserId());" />
 	</methods>
 	<content><![CDATA[
 
@@ -26,13 +26,10 @@ public void add{dataclass}({dataclass} {lowerdataclass}) {
 		CallableStatement cs = cn.prepareCall("{call p_{lowerpluraldataclass}_insert({{~commaloop}})}");
 
 		// region parameters
-
-{{~paramloop}}
-
+		{{~paramloop}}
 		// endregion
 
 		cs.execute();
-
 		cs.close();
 		cn.close();
 	} catch (SQLException e) {

@@ -4,8 +4,8 @@
     <description>
         Creates Builder Pattern for POJO
     </description>
-    <dataclass>Tweet</dataclass>
-    <datatable>z_tweets</datatable>
+    <dataclass>TwitterUser</dataclass>
+    <datatable>tweets_users</datatable>
     <connection>mysql.codejohnnydb</connection>
     <properties>
         <property name="packagename" value="com.nixmash.jangles.dto"
@@ -14,13 +14,17 @@
                   description="include Primary Id in loop pattern"/>
     </properties>
     <methods>
-        <method name="builderparamloop" method="getBuilderParams" type="com.codejohnny.templates.java.pojo.Builder"
+        <method name="builderparamloop" method="getBuilderParams"
+                type="com.codejohnny.templates.java.pojo.Builder"
                 pattern="Long userId, String username..."/>
-        <method name="buildervarloop" method="getBuilderVarLoop" type="com.codejohnny.templates.java.pojo.Builder"
+        <method name="buildervarloop" method="getBuilderVarLoop"
+                type="com.codejohnny.templates.java.pojo.Builder"
                 pattern="userId, username..."/>
-        <method name="builtvarloop" method="getBuiltParamNames" type="com.codejohnny.templates.java.pojo.Builder"
+        <method name="builtvarloop" method="getBuiltParamNames"
+                type="com.codejohnny.templates.java.pojo.Builder"
                 pattern="built.userId = userid;"/>
-        <method name="buildersinglepropertyloop" method="getBuiltIndiProperties" type="com.codejohnny.templates.java.pojo.Builder"
+        <method name="buildersinglepropertyloop" method="getBuiltIndiProperties"
+                type="com.codejohnny.templates.java.pojo.Builder"
                 pattern="built.userId = userid;"/>
     </methods>
     <content><![CDATA[

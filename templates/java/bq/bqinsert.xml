@@ -4,13 +4,10 @@
 	<description>
 		Service and DB Layers for entering MySQL data
 	</description>
-	<dataclass>Status</dataclass>
-	<datatable>tweets</datatable>
+	<dataclass>Job</dataclass>
+	<datatable>batch_job</datatable>
 	<connection>mysql.codejohnnydb</connection>
-	<properties>
-		<property name="dbprovider" value="NixMashupPostgreSql"
-			  description="Provider Prefix Name. ex: '[CodeJohnny]SearchDataProvider'" />
-	</properties>
+	<properties />
 	<methods>
 		<method name="fieldloop" method="fieldLoop" type="com.codejohnny.templates.java.bq.BqInsert"
 			pattern="username, first_name, last_name" />
@@ -19,7 +16,7 @@
 	</methods>
 	<content><![CDATA[
 
-// Start Bootique JDBC Query Statement ------------------------------------------------------- */
+// Start Bootique JDBC Query Statement ------------------------------------------- */
 
 @Override
 public {dataclass} add{dataclass}({dataclass} {lowerdataclass}) throws SQLException {
@@ -45,7 +42,7 @@ public {dataclass} add{dataclass}({dataclass} {lowerdataclass}) throws SQLExcept
 	}
 }
 
-// End Bootique JDBC Query Statement ------------------------------------------------------- */
+// End Bootique JDBC Query Statement ------------------------------------------- */
 
 
 ]]>
