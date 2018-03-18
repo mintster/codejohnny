@@ -29,27 +29,23 @@ public class DbRetrieve extends TemplateBase {
         this.doPopulate = CodeJohnnyUtils.getBooleanProperty(codeJohnnyTemplate, "doPopulate");
 
         Injector injector = Guice.createInjector(new CodeJohnnyModule());
-        this.codeJohnnyDb= injector.getInstance(ICodeJohnnyDb.class);
+        this.codeJohnnyDb = injector.getInstance(ICodeJohnnyDb.class);
 
     }
 
-public String processMustache(String content, CodeJohnnyTemplate codeJohnnyTemplate)
-        throws UnsupportedEncodingException, SQLException {
-    Mustache m = getMustache(content);
-    StringWriter sw = new StringWriter();
-    Map<String, Object> model = new HashMap<>();
-    model.put("users", codeJohnnyDb.getCodeJohnnyUsers());
-    addBooleanProperties(model, codeJohnnyTemplate.getProperties());
-    m.execute(sw, model);
-    return sw.toString();
-}
+    public String processMustache(String content, CodeJohnnyTemplate codeJohnnyTemplate)
+            throws UnsupportedEncodingException, SQLException {
+        Mustache m = getMustache(content);
+        StringWriter sw = new StringWriter();
+        Map<String, Object> model = new HashMap<>();
+        model.put("users", codeJohnnyDb.getCodeJohnnyUsers());
+        addBooleanProperties(model, codeJohnnyTemplate.getProperties());
+        m.execute(sw, model);
+        return sw.toString();
+    }
 
-      public String closeConnections(CodeJohnnyTemplate codeJohnnyTemplate) {
-
-        return "rs.close();\n" +
-                "cs.close();\n" +
-                "cn.close();";
-
+    public String closeConnections(CodeJohnnyTemplate codeJohnnyTemplate) {
+        return "close(rs, cs, cn);";
     }
 
     /**
@@ -69,7 +65,6 @@ public String processMustache(String content, CodeJohnnyTemplate codeJohnnyTempl
 
         if (doPopulate) {
             String loopPattern = "{lowerdataclass}.set%s(rs.get%s(\"%s\"));\n";
-
             for (CodeJohnnyColumn codeJohnnyColumn : codeJohnnyTemplate
                     .getColumns()) {
                 loopPopulatedPattern = String.format(loopPattern,
@@ -79,7 +74,7 @@ public String processMustache(String content, CodeJohnnyTemplate codeJohnnyTempl
                 loopBuilder.append(loopPopulatedPattern);
             }
 
-            return loopBuilder.toString().replace("getInteger(","getInt(");
+            return loopBuilder.toString().replace("getInteger(", "getInt(");
         } else
             return StringUtils.EMPTY;
     }

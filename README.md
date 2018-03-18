@@ -1,7 +1,7 @@
 ## CodeJohnny Open Source Java Code Generator
 
 Version: 2.0.5
-Updated: December 8, 2017
+Updated: March 18, 2018
 
 ### About
 
@@ -15,7 +15,7 @@ CodeJohnny's XML templates support **Typed Properties**, **Variables**, **Method
 - **Built-in tags** are included, like `{pluraldataclass}`, `{primarykey}`, and others, with 
 - **Global properties** defined in `globalproperties.xml.`
 
-***Please see the [CodeJohnny Wiki](https://github.com/mintster/codejohnny/wiki) for complete documentation***
+***Please see the [CodeJohnny Wiki](https://github.com/mintster/codejohnny/wiki) for more documentation along with the [CodeJohnny Website](http://codejohnny.daveburkevt.com) for templates and working examples.***
 
 ### License
 

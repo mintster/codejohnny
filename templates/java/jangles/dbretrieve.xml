@@ -4,16 +4,16 @@
     <description>
         Business Layer Request, Data Retrieval and Populate Object
     </description>
-    <dataclass>User</dataclass>
-    <datatable>codejohnny_users</datatable>
+    <dataclass>PostMeta</dataclass>
+    <datatable>z_post_meta</datatable>
     <connection>mysql.codejohnnydb</connection>
     <mustache type="com.codejohnny.templates.java.jangles.DbRetrieve" />
     <properties>
-        <property name="dbClass" value="twitter" />
-        <property name="varDataType" value="String" />
-        <property name="varName" value="screenName" />
+        <property name="dbClass" value="posts" />
+        <property name="varDataType" value="Long" />
+        <property name="varName" value="postid" />
         <property name="sql"
-                  value="select * from users" />
+                  value="select * from v_post_meta" />
         <property name="doPopulate" value="true" type="java.lang.Boolean"
                   description="generate populateTweets(rs..) y/n"/>
     </properties>
@@ -72,9 +72,7 @@ public List<{dataclass}> get{pluraldataclass}()   {
             while (rs.next()) {
                 populate{dataclass}(rs, {lowerdataclass});
             }
-            rs.close();
-            cs.close();
-            cn.close();
+            close(rs, cs, cn);
         } catch (SQLException e) {
             logger.info("Error getting {dataclass}: " + e.getMessage());
         }

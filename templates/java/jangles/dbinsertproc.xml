@@ -4,11 +4,11 @@
 	<description>
 		Service and DB Layers for entering MySQL data
 	</description>
-	<dataclass>User</dataclass>
-	<datatable>codejohnny_users</datatable>
+	<dataclass>PostMeta</dataclass>
+	<datatable>z_post_meta</datatable>
 	<connection>mysql.codejohnnydb</connection>
 	<properties>
-		<property name="addId" value="false" type="java.lang.Boolean"
+		<property name="addId" value="true" type="java.lang.Boolean"
 				  description="include Primary Id in loop pattern"/>
 	</properties>
 	<methods>

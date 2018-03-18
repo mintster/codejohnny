@@ -12,7 +12,7 @@ public class Launcher {
      * TEMPLATE variable: relative to /resources/templates folder.
      * If "test.xml" in /templates/java root, TEMPLATE would be "java/test.xml"
      */
-    private static String template = Template.SQL_INSERT_PROC;
+    private static String template = Template.DB_RETRIEVE;
     public static void main(String[] args) {
         Injector injector = Guice.createInjector(new CodeJohnnyModule());
         CodeJohnnyColumns codeJohnnyColumns = injector.getInstance(CodeJohnnyColumns.class);
